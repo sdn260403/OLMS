@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+Welcome Teacher {{user.username}}
+
+<style>
+h1 {
+  text-align: center;
+}
+table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+ .container {
+            max-width: 800px;
+            margin: 20px auto;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #007acc;
+            color: #fff;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+</style>
+
+
+
+        
+
+    <div class="container">
+        <h1>Response</h1>
+        <table>
+                  
+            <thead>
+                <tr>
+                    <th>Student Name</th>
+                    <th>Leave Type</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for i in app2%}
+                <form method="POST">
+                {%  csrf_token  %}
+                <tr>
+                    <td>{{i.user.getname}}</td>
+                    <td>{{i.leaveT}}</td>
+                    <td>{{i.s_date}}</td>
+                    <td>{{i.e_date}}</td>
+                    
+                    {% if i.status == "Pending" %}
+                    <td>
+                        <select name="status">
+                                <option value="Pending">Pending</option>
+                                <option value="Accepted">Accepted</option>
+                                <option value="Rejected">Rejected</option>
+                        </select>
+                        <input type="hidden" value="{{i.id}}" id="id"  name="id" >
+                    </td>
+                   {% else %}
+                        <td>{{i.status}}</td>
+                   {% endif %}                   
+                </tr>
+                
+                {%endfor %}
+                {%if app2|length == 0%}
+                <table>
+                                <p>No Data to Display </p>
+                        
+                 </table>
+                 {%endif%}
+                
+            </tbody>
+                
+
+    </table>
+        <a href="{% url 'home' %}" class="previous">&laquo; Home</a>
+        <input type="submit" value="Submit"> 
+        
+    </div>
+    	
+        
+    </form>
+
+
+{% endblock %}

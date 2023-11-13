@@ -1,0 +1,21 @@
+
+
+{% extends 'base_profile.html' %}
+{%load static %}}
+
+
+{% block content %}
+        
+    <div class="profile-info">
+        <img class="profile-image" src="{% static 'prof.png' %}" alt="My Profile Picture">
+            <p></p>
+            <label>Username: {{user.username}}</label>
+            <p></p>
+            <label>Role: Admin</label>
+            <p></p>
+            <label>Date Joined: {{user.date_joined}}</label>
+            <p></p>
+            <label>Last Login: {{user.last_login}}</label>
+    </div>
+{% endblock %}
+

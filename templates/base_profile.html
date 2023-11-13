@@ -1,0 +1,201 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Profile</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #007acc;
+            color: #fff;
+            text-align: center;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+        }
+        .profile-image {
+            display: block;
+            margin: 0 auto;
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+        }
+        .profile-info {
+            text-align: center;
+        }
+         .navbar {
+      overflow: hidden;
+      background-color: #333;
+      }
+      .navbar a {
+      float: right;
+      font-size: 16px;
+      color: white;
+      text-align: center;
+      padding: 14px 16px;
+      text-decoration: none;
+      }
+      .dropdown {
+      float: right;
+      overflow: hidden;
+      }
+      .dropdown .dropbtn {
+      font-size: 16px;  
+      border: none;
+      outline: none;
+      color: white;
+      padding: 14px 35px;
+      background-color: inherit;
+      font-family: inherit;
+      margin: 0;
+      }
+      .navbar a:hover, .dropdown:hover .dropbtn {
+      background-color: red;
+      }
+      .dropdown-content {
+      display: none;
+      position: absolute;
+      background-color: #f9f9f9;
+      min-width: 160px;
+      box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+      z-index: 1;
+      }
+      .dropdown-content a {
+      float: none;
+      color: black;
+      padding: 12px 16px;
+      text-decoration: none;
+      display: block;
+      text-align: left;
+      }
+      .dropdown-content a:hover {
+      background-color: #ddd;
+      }
+      .dropdown:hover .dropdown-content {
+      display: block;
+      }
+      .datetime {
+        color: white;
+        text-align: center;
+            font-size: 18px;
+            
+        }
+         .profile-info {
+            margin-top: 20px;
+        }
+
+        .profile-info label {
+            font-weight: bold;
+        }
+
+        .profile-info p {
+            margin: 6px 0;
+        }
+    </style>
+</head>
+<body>
+        <header>
+        <h1>Profile</h1>
+    </header>
+       <div class="navbar">
+        <div class="datetime" id="datetime">
+                <script>
+                        function updateDateTime() {
+                        const datetimeElement = document.getElementById('datetime');
+                        const now = new Date();
+                        const dateTimeString = now.toLocaleString();
+                        datetimeElement.textContent = dateTimeString;
+                        }
+        
+                        // Update the date and time every second
+                        setInterval(updateDateTime, 1000);
+
+                        // Initial update
+                        updateDateTime();
+                </script>
+      
+        </div>
+        {% if user.is_authenticated %}
+                {% if user.is_student%}
+                        <div class="dropdown">
+                        <button class="dropbtn">Welcome {{user.username}}
+                        <i class="fa fa-caret-down"></i>
+                        </button>
+                                <div class="dropdown-content">          
+                                        <a href="{% url 'students' %}">Profile </a>
+                                        <a href="{% url 'ShowTResp' %}">Applications</a>
+                                        <a href="{% url 'SAnalysis' %}">Analysis</a>
+                                        <a href="{% url 'logout' %}"> <strong> Log Out </strong></a>
+                                </div>
+                        </div>
+                {% elif user.is_teacher%}
+                        <div class="dropdown">
+                        <button class="dropbtn">Welcome {{user.username}}
+                        <i class="fa fa-caret-down"></i>
+                        </button>
+                                <div class="dropdown-content">          
+                                        <a href="{% url 'teachers' %}">Profile </a>
+                                        <a href="TAppStatus">Past Applications</a>
+                                        <a href="Showapp">Leave Requests</a>
+                                        <a href="{% url 'TAnalysis' %}">Analysis</a>
+                                        <a href="{% url 'logout' %}"> <strong> Log Out </strong></a>
+                                </div>
+                        </div>
+                {% else %}
+                        <div class="dropdown">
+                        <button class="dropbtn">Welcome {{user.username}}
+                        <i class="fa fa-caret-down"></i>
+                        </button>
+                                <div class="dropdown-content">          
+                                        <a href="{% url 'teachers' %}">Profile </a>
+                                        <a href="ShowTapp">Show Applications</a>
+                                        <a href="admin/">Manage USers</a>
+                                        <a href="{% url 'logout' %}"> <strong> Log Out </strong></a>
+                                </div>
+                        </div>
+                {% endif %}
+        {% else %}
+                <div class="dropdown">
+                <button class="dropbtn">Log/Sign In 
+                <i class="fa fa-caret-down"></i>
+                </button>
+                        <div class="dropdown-content">    
+                                <a href="{% url 'login' %}">Log In</a>
+                                <a href="{% url 'signup' %}">Sign Up</a>
+                        </div>
+                </div>
+        {% endif %}         
+                
+ 
+        {% if user.is_authenticated %}
+                {% if user.is_student%}
+                        <a href="{% url 'sleaveApp'%}">Apply Leave</a>
+                {% elif user.is_teacher %}
+                        <a href="tleaveApp">Apply Leave</a>
+                {% endif %}
+        {% else %}
+                <a href="/">Apply Leave</a>   
+                
+        {% endif %}      
+      <a href="{% url 'home' %}">Home</a>
+    </div>
+        {% block content %}
+        {% endblock%}
+</body>
+</html>

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leave Analysis Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .dashboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .widget {
+            text-align: center;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 5px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .widget h2 {
+            margin-bottom: 10px;
+        }
+
+        .chart-container {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 style="text-align: center;">Leave Analysis Dashboard</h1>
+
+        <div class="dashboard">
+            <div class="widget" id="leaveTypeWidget">
+                <h2>Type of Leaves Applied</h2>
+                <div class="chart-container">
+                    <canvas id="leaveTypeChart" width="400" height="400"></canvas>
+                </div>
+            </div>
+
+            <div class="widget" id="daysTakenWidget">
+                <h2>Leave Approval Status</h2>
+                <div class="chart-container">
+                    <canvas id="daysTakenChart" width="400" height="400"></canvas>
+                </div>
+            </div>
+
+            <!-- Add more widgets as needed -->
+        </div>
+    <a href="{% url 'home' %}" class="previous">&laquo; Home</a>
+    </div>
+
+    <script>
+        // Sample data for the pie charts (you can replace with real data)
+        const leaveTypeData = {
+            labels: ['Vacation','Sick Leave'],
+            datasets: [{
+                data: {{ld|safe}},
+               // backgroundColor: ['#ff5733', '#33ff57', '#5733ff'],
+            }]
+        };
+
+        const studentsAppliedData = {
+            labels: ['Accepted', 'Rejected','Pending'],
+            datasets: [{
+                data: {{ pd|safe }},
+                //backgroundColor: ['#33aaff', '#aaaaaa'],
+            }]
+        };
+
+
+        // Create pie charts
+        const leaveTypeChart = new Chart(document.getElementById('leaveTypeChart'), {
+            type: 'pie',
+            data: leaveTypeData,
+        });
+
+
+        const daysTakenChart = new Chart(document.getElementById('daysTakenChart'), {
+            type: 'pie',
+            data: studentsAppliedData,
+        });
+    </script>
+</body>
+</html>

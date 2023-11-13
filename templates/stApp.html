@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Leave Request Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #80ced6;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 50px;
+            max-width: 500px;
+            margin: 0 auto;
+            margin-top: 20px;
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        input[type="text"],
+        input[type="date"],
+        textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 6px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        select {
+            width: 100%;
+            padding: 10px;
+            margin: 6px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        textarea {
+            height: 100px;
+        }
+
+        .btn-container {
+            text-align: center;
+        }
+
+        .submit-btn {
+            background-color: #007acc;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            padding: 10px 20px;
+            margin-top: 10px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Leave Request Form</h2>
+        <form class="site-form" action="{%url 'sleaveApp' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {% if error %}
+                <p style="color:tomato;"> Invalid Date Input Enter Again</p>
+            {% endif %}
+            <label for="leaveType">Leave Type:{{form.leaveT}}</label>
+            <label for="startDate">Start Date:{{form.s_date}}</label>
+            <label for="endDate">End Date:{{form.e_date}}</label>
+            <label for="reason">Reason:{{form.content}}</label>
+            <label for="to_Teacher">To:{{form.to_teacher}}</label>
+            <div class="btn-container">
+                <input type="submit" class="submit-btn" value="Submit">
+            </div>
+        </form>
+    </div>
+</body>
+</html>
+
